@@ -176,7 +176,7 @@ const terminal = document.getElementById("terminal");
 
 const commands = [
   "help","about","status","links","contact",
-  "whoami","aidn","version","uptime","clear"
+  "whoami","version","uptime","clear"
 ];
 
 let history = [];
@@ -259,10 +259,6 @@ function handleCommand(cmd){
     addLine("");
     addLine("visitor@aidn","dim");
     addLine("");
-  }
-
-  else if(cmd==="aidn"){
-    showLogo();
   }
 
   else if(cmd==="version"){
