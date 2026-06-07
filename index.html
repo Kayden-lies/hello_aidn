@@ -48,29 +48,26 @@
     .line {
       font-size: 1rem;
       margin: 6px 0;
-      color: #8ab4f8;
       white-space: pre;
     }
 
+    .prompt { color: #00ff9c; }
+    .blue { color: #8ab4f8; }
+    .highlight { color: #00c6ff; }
+    .dim { color: #aaa; }
+
     .cursor {
       display: inline-block;
-      width: 10px;
+      width: 8px;
+      height: 14px;
       background: #00ff9c;
-      margin-left: 5px;
+      margin-left: 4px;
       animation: blink 1s infinite;
     }
 
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
-    }
-
-    .prompt {
-      color: #00ff9c;
-    }
-
-    .highlight {
-      color: #00c6ff;
     }
   </style>
 </head>
@@ -88,15 +85,15 @@
 
   <script>
     const lines = [
-      "> initializing AIDN...",
-      "loading modules ██████████ 100%",
-      "establishing network...",
-      "deploying intelligence layer...",
-      "system status: under development",
-      "",
-      "AIDN is currently being built.",
-      "We're working on something powerful.",
-      "Check back soon."
+      { text: "> initializing AIDN...", class: "prompt" },
+      { text: "loading modules ██████████ 100%", class: "blue" },
+      { text: "establishing network...", class: "blue" },
+      { text: "deploying intelligence layer...", class: "blue" },
+      { text: "system status: under development", class: "highlight" },
+      { text: "", class: "" },
+      { text: "AIDN is currently being built.", class: "dim" },
+      { text: "We're working on something powerful.", class: "dim" },
+      { text: "Check back soon.", class: "dim" }
     ];
 
     const output = document.getElementById("output");
@@ -109,11 +106,11 @@
 
       if (!output.lastChild || !output.lastChild.classList.contains("line")) {
         const div = document.createElement("div");
-        div.className = "line";
+        div.className = "line " + lines[lineIndex].class;
         output.appendChild(div);
       }
 
-      const currentLine = lines[lineIndex];
+      const currentLine = lines[lineIndex].text;
       const currentDiv = output.lastChild;
 
       if (charIndex < currentLine.length) {
