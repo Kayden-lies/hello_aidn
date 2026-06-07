@@ -1,131 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AIDN</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AIDN</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Courier New', monospace;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+}
 
-    body {
-      background: #000;
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+body {
+  background: #000;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .terminal {
-      width: 90%;
-      max-width: 700px;
-      background: #0a0a0a;
-      border: 1px solid #1f1f1f;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 0 40px rgba(0, 150, 255, 0.1);
-    }
+.terminal {
+  width: 90%;
+  max-width: 700px;
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(0, 150, 255, 0.1);
+}
 
-    .logo {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+.logo {
+  text-align: center;
+  margin-bottom: 25px;
+}
 
-    .logo img {
-      width: 220px;
-      height: auto;
-      max-width: 80%;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 25px rgba(0, 198, 255, 0.7));
-    }
+.logo img {
+  width: 220px;
+  filter: drop-shadow(0 0 25px rgba(0,198,255,0.7));
+}
 
-    .line {
-      font-size: 1rem;
-      margin: 6px 0;
-      white-space: pre;
-    }
+.line {
+  margin: 6px 0;
+  white-space: pre;
+  color: #8ab4f8;
+}
 
-    .prompt { color: #00ff9c; }
-    .blue { color: #8ab4f8; }
-    .highlight { color: #00c6ff; }
-    .dim { color: #aaa; }
+.prompt { color: #00ff9c; }
+.highlight { color: #00c6ff; }
+.dim { color: #aaa; }
 
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 14px;
-      background: #00ff9c;
-      margin-left: 4px;
-      animation: blink 1s infinite;
-    }
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #00ff9c;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
 
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0; }
-    }
-  </style>
+@keyframes blink {
+  0%,100% { opacity:1; }
+  50% { opacity:0; }
+}
+</style>
 </head>
 
 <body>
-  <div class="terminal">
 
-    <div class="logo">
-      <img src="logo.png" alt="AIDN">
-    </div>
-
-    <div id="output"></div>
-
+<div class="terminal">
+  <div class="logo">
+    <img src="logo.png" />
   </div>
 
-  <script>
-    const lines = [
-      { text: "> initializing AIDN...", class: "prompt" },
-      { text: "loading modules ██████████ 100%", class: "blue" },
-      { text: "establishing network...", class: "blue" },
-      { text: "deploying intelligence layer...", class: "blue" },
-      { text: "system status: under development", class: "highlight" },
-      { text: "", class: "" },
-      { text: "AIDN is currently being built.", class: "dim" },
-      { text: "We're working on something powerful.", class: "dim" },
-      { text: "Check back soon.", class: "dim" }
-    ];
+  <div id="output"></div>
+</div>
 
-    const output = document.getElementById("output");
+<script>
+const output = document.getElementById("output");
 
-    let lineIndex = 0;
-    let charIndex = 0;
+function addLine(text, cls="line") {
+  const div = document.createElement("div");
+  div.className = cls;
+  div.textContent = text;
+  output.appendChild(div);
+  output.scrollTop = output.scrollHeight;
+}
 
-    function typeLine() {
-      if (lineIndex >= lines.length) return;
+function sleep(ms) {
+  return new Promise(res => setTimeout(res, ms));
+}
 
-      if (!output.lastChild || !output.lastChild.classList.contains("line")) {
-        const div = document.createElement("div");
-        div.className = "line " + lines[lineIndex].class;
-        output.appendChild(div);
-      }
+async function boot() {
 
-      const currentLine = lines[lineIndex].text;
-      const currentDiv = output.lastChild;
+  addLine("> initializing AIDN...", "line prompt");
+  await sleep(600);
 
-      if (charIndex < currentLine.length) {
-        currentDiv.textContent += currentLine.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeLine, 25);
-      } else {
-        lineIndex++;
-        charIndex = 0;
-        setTimeout(typeLine, 400);
-      }
+  // Fake progress bar animation
+  let progress = "";
+  for (let i = 0; i <= 20; i++) {
+    progress = "█".repeat(i) + " ".repeat(20 - i);
+    if (output.lastChild && output.lastChild.id === "progress") {
+      output.lastChild.textContent = "loading modules [" + progress + "]";
+    } else {
+      const bar = document.createElement("div");
+      bar.id = "progress";
+      bar.className = "line";
+      bar.textContent = "loading modules [" + progress + "]";
+      output.appendChild(bar);
     }
+    await sleep(80);
+  }
 
-    typeLine();
-  </script>
+  output.lastChild.textContent += " 100%";
+  await sleep(500);
+
+  addLine("establishing network...");
+  await sleep(500);
+
+  addLine("deploying intelligence layer...");
+  await sleep(600);
+
+  addLine("system status: under development", "line highlight");
+  await sleep(500);
+
+  addLine("");
+  addLine("AIDN is currently being built.", "line dim");
+  await sleep(300);
+
+  addLine("We're working on something powerful.", "line dim");
+  await sleep(300);
+
+  addLine("Check back soon.", "line dim");
+
+}
+
+boot();
+</script>
 
 </body>
 </html>
