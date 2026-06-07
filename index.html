@@ -219,18 +219,7 @@ function showLogo(){
   addLine("");
 }
 
-/* STATUS */
-function showStatus(){
-  addLine("");
-  addLine("STATUS REPORT","blue");
-  addLine("─────────────","dim");
-  addLine("Environment        : development");
-  addLine("Access             : restricted");
-  addLine("Deployment         : unavailable");
-  addLine("");
-  addLine("Overall State      : active (development mode)","green");
-  addLine("");
-}
+/* STATUS */ function showStatus(){ addLine(""); addLine("STATUS REPORT","blue"); addLine("─────────────","dim"); addLine("Environment : development"); addLine("Access : restricted"); addLine("Deployment : unavailable"); addLine(""); addLine("System Layers","blue"); addLine("─────────────","dim"); addLine("Core Layer : initializing"); addLine("AI Layer : in development"); addLine("Network Layer : configuring"); addLine("Interface Layer : minimal"); addLine(""); addLine("Overall State : active (development mode)","green"); addLine(""); }
 
 /* COMMANDS */
 function handleCommand(cmd){
