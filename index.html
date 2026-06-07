@@ -38,27 +38,26 @@
     }
 
     .logo img {
-  width: 220px;       
-  height: auto;       
-  max-width: 80%;     
-  margin-bottom: 20px;
-  filter: drop-shadow(0 0 25px rgba(0, 198, 255, 0.7));
-}
+      width: 220px;
+      height: auto;
+      max-width: 80%;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 25px rgba(0, 198, 255, 0.7));
+    }
 
     .line {
       font-size: 1rem;
-      margin: 8px 0;
+      margin: 6px 0;
       color: #8ab4f8;
+      white-space: pre;
     }
 
-    .prompt {
-      color: #00ff9c;
-    }
-
-    .typing::after {
-      content: "|";
-      animation: blink 1s infinite;
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff9c;
       margin-left: 5px;
+      animation: blink 1s infinite;
     }
 
     @keyframes blink {
@@ -66,10 +65,8 @@
       25%, 75% { opacity: 0; }
     }
 
-    .status {
-      margin-top: 15px;
-      color: #aaa;
-      font-size: 0.95rem;
+    .prompt {
+      color: #00ff9c;
     }
 
     .highlight {
@@ -85,19 +82,53 @@
       <img src="logo.png" alt="AIDN">
     </div>
 
-    <div class="line"><span class="prompt">> initializing AIDN...</span></div>
-    <div class="line">loading modules ██████████ 100%</div>
-    <div class="line">establishing network...</div>
-    <div class="line">deploying intelligence layer...</div>
-
-    <div class="line typing"><span class="highlight">system status:</span> under development</div>
-
-    <div class="status">
-      AIDN is currently being built.<br/>
-      We're working on something powerful.<br/>
-      Check back soon.
-    </div>
+    <div id="output"></div>
 
   </div>
+
+  <script>
+    const lines = [
+      "> initializing AIDN...",
+      "loading modules ██████████ 100%",
+      "establishing network...",
+      "deploying intelligence layer...",
+      "system status: under development",
+      "",
+      "AIDN is currently being built.",
+      "We're working on something powerful.",
+      "Check back soon."
+    ];
+
+    const output = document.getElementById("output");
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (lineIndex >= lines.length) return;
+
+      if (!output.lastChild || !output.lastChild.classList.contains("line")) {
+        const div = document.createElement("div");
+        div.className = "line";
+        output.appendChild(div);
+      }
+
+      const currentLine = lines[lineIndex];
+      const currentDiv = output.lastChild;
+
+      if (charIndex < currentLine.length) {
+        currentDiv.textContent += currentLine.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeLine, 25);
+      } else {
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(typeLine, 400);
+      }
+    }
+
+    typeLine();
+  </script>
+
 </body>
 </html>
