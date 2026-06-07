@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AIDN</title>
+<title>AIDN - Coming Soon</title>
+<link rel="icon" type="image/png" href="Dark_Favicon.png">
 
 <style>
 * {
@@ -390,7 +391,7 @@ async function fakeReboot(){
 
 /* BOOT */
 async function boot(){
-
+  
   await typeLine("Initializing AIDN environment...","dim");
   await sleep(200);
 
@@ -400,7 +401,7 @@ async function boot(){
   await typeLine("────────────────────────────","dim");
 
   showLogo();
-
+  await typeLine("AIDN Pune Developer Day • AI Community & Events Platform","green");
   await typeLine("AIDN is still under development, but you can hop into the Terminal Player to explore, experiment, and get a feel for what we’re building.","blue");
   await typeLine("Use 'help' to explore available commands.","dim");
 
